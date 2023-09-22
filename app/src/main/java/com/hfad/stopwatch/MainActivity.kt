@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean("running", running)
         outState.putLong("offset", offset)
+        outState.putLong("base", stopwatch.base)
         super.onSaveInstanceState(outState)
     }
 
@@ -29,9 +30,12 @@ class MainActivity : AppCompatActivity() {
         if(savedInstanceState != null) {
             running = savedInstanceState.getBoolean("running")
             offset = savedInstanceState.getLong("offset")
-            setBaseTime()
+
             if(running) {
+                stopwatch.base = savedInstanceState.getLong("base")
                 stopwatch.start()
+            } else {
+                setBaseTime()
             }
         }
 
