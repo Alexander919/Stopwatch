@@ -11,13 +11,44 @@ class MainActivity : AppCompatActivity() {
     var running = false
     var offset: Long = 0
 
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if(running) {
+            saveOffset()
+            stopwatch.stop()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(running) {
+            setBaseTime()
+            stopwatch.start()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean("running", running)
         outState.putLong("offset", offset)
         outState.putLong("base", stopwatch.base)
         super.onSaveInstanceState(outState)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
